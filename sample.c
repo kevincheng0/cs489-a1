@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/stat.h>
     
 #define BUFSIZE 256
     
@@ -10,7 +11,13 @@ int main(int argc, char** argv) {
         fprintf(stderr, "Please provide the address of a file as an input.\n");
         return -1;
     }
-    char cmd[BUFSIZE] = "wc -c < ";
-    strcat(cmd, argv[1]);
-    system(cmd);
+
+		struct stat fileStat;
+
+    if (stat(argv[1], &fileStat) != 0) {
+        perror("Cannot access file address");
+        return -1;
+    }
+
+    printf("The file size is: %d bytes\n", argv[1], fileStat.st_size);
 }
