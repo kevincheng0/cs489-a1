@@ -1,9 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/stat.h>
-    
-#define BUFSIZE 256
-    
+
 // This program prints the size of a specified file in bytes
 int main(int argc, char** argv) {
     // Ensure that the user supplied exactly one command line argument
@@ -15,9 +13,9 @@ int main(int argc, char** argv) {
 		struct stat fileStat;
 
     if (stat(argv[1], &fileStat) != 0) {
-        perror("Cannot access file address");
+        fprintf(stderr, "Cannot access file address.\n");
         return -1;
     }
 
-    printf("The file size is: %d bytes\n", argv[1], fileStat.st_size);
+    printf("The file size is: %d bytes\n", (int)fileStat.st_size);
 }
